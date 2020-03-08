@@ -14,10 +14,6 @@ if n is 0 we return 0
 """
 
 import itertools
-import random
-from ttictoc import TicToc
-import pandas as pd
-import matplotlib.pyplot as plt
 
 def solution(l): 
     l.sort(reverse=True)
@@ -30,34 +26,3 @@ def solution(l):
                 combo.sort(reverse=True)
                 return int(''.join(map(str, combo)))
     return 0
-
-def main():
-    bench_mark_data = []
-    # number of datapoints
-    for x in range(1, 1000, 10):
-        average = 0
-        print(str(x) + "/10000")
-        # number of times to re run
-        for y in range(0, 10):
-            l = []
-            # generate an array 
-            for z in range(0, x):
-                l.append(random.randint(0, 9))
-            t = TicToc()
-            t.tic()
-            solution(l)
-            t.toc()
-            average += t.elapsed
-        average = average / 200
-        data = []
-        data.append(average)
-        data.append(x)
-        bench_mark_data.append(data)
-    df = pd.DataFrame(bench_mark_data)
-    df.columns = ["average time", "list size"]
-    df.plot(kind='line', x="average time" , y="list size", ax=plt.gca())
-    plt.show()
-    
-    print(df)
-
-main()
